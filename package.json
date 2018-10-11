@@ -4,10 +4,10 @@
     "description": "Demonstrate the core capabilties of the Microsoft Bot Framework",
     "author": "Microsoft Bot Builder Yeoman Generator v4.0.10",
     "license": "MIT",
-    "main": "index.js",
+    "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node ./index.js"
+        "start": "node ./server.js"
     },
     "repository": {
         "type": "git",
