@@ -1,5 +1,5 @@
 {
-    "name": "myChatBot",
+    "name": "@artificialsolutions/tie-api-example-ms-bot-framework",
     "version": "1.0.0",
     "description": "Demonstrate the core capabilties of the Microsoft Bot Framework",
     "author": "Microsoft Bot Builder Yeoman Generator v4.0.10",
@@ -8,6 +8,10 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node ./index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/artificialsolutions/tie-api-example-ms-bot-framework"
     },
     "dependencies": {
         "botbuilder": "^4.0.6",
