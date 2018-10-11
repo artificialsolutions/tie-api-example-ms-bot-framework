@@ -5,7 +5,7 @@ const { ActivityTypes } = require('botbuilder');
 const TIE = require('@artificialsolutions/tie-api-client');
 
 // Teneo engine url
-const teneoEngineUrl = process.env.TENEO_ENGINE_URL || "https://developerarea-dev.teneocloud.com/tiesdktest/";
+const teneoEngineUrl = process.env.TENEO_ENGINE_URL;
 
 // property to store sessionId in conversation state object
 const SESSION_ID_PROPERTY = 'sessionId';
