@@ -1,0 +1,25 @@
+{
+    "name": "heroku-ms-bot-framework-teneo",
+    "description": "A Teneo bot connector for the Microsoft Bot Framework.",
+    "keywords": [
+        "bot",
+        "bot framework",
+        "Teneo",
+        "CAI"
+    ],
+    "repository": "https://github.com/artificialsolutions/tie-api-example-ms-bot-framework/",
+    "env": {
+        "MICROSOFT_APP_ID": {
+            "description": "Please input your Microsoft App ID",
+            "required":true
+        },
+        "MICROSOFT_APP_PASSWORD": {
+            "description": "Please input your Microsoft App Password",
+            "required":true
+        },
+        "TENEO_ENGINE_URL": {
+            "description": "Please input your Teneo Engine URL. https://some.engine/instance/",
+            "required":true
+        }
+    }
+}
