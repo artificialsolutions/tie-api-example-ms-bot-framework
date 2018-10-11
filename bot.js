@@ -32,8 +32,6 @@ class MyBot {
     // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
     if (turnContext.activity.type === ActivityTypes.Message) {
 
-      console.log(turnContext.activity);
-
       // send user input to engine and store sessionId in state
       await this.handleMessage(turnContext);
 
@@ -58,8 +56,6 @@ class MyBot {
       // find engine session id
       const sessionId = await this.sessionIdProperty.get(turnContext);
   
-      console.log(sessionId);
-  
       // send message to engine using sessionId
       const teneoResponse = await teneoApi.sendInput(sessionId, {
         text: message.text
@@ -69,8 +65,6 @@ class MyBot {
   
       // store egnine sessionId in conversation state
       await this.sessionIdProperty.set(turnContext, teneoResponse.sessionId);
-
-      console.log(this.sessionIdProperty);
     
       // send engine output text to bot framework
       await turnContext.sendActivity(teneoResponse.output.text);
