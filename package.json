@@ -1,9 +1,9 @@
 {
     "name": "@artificialsolutions/tie-api-example-ms-bot-framework",
-    "version": "1.0.0",
-    "description": "Demonstrate the core capabilties of the Microsoft Bot Framework",
-    "author": "Microsoft Bot Builder Yeoman Generator v4.0.10",
-    "license": "MIT",
+    "version": "0.0.1",
+    "description": "Example connector for Teneo and Microsoft Bot Framework",
+    "author": "Lucas Willering",
+    "license": "Apache 2.0",
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,7 +16,6 @@
     "dependencies": {
         "@artificialsolutions/tie-api-client": "^1.1.2",
         "botbuilder": "^4.0.8",
-        "botframework-config": "^4.0.8",
         "restify": "^7.1.0"
     }
 }

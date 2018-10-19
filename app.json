@@ -3,9 +3,8 @@
     "description": "A Teneo bot connector for the Microsoft Bot Framework.",
     "keywords": [
         "bot",
-        "bot framework",
-        "Teneo",
-        "CAI"
+        "Microsoft Bot Framework",
+        "Teneo"
     ],
     "repository": "https://github.com/artificialsolutions/tie-api-example-ms-bot-framework/",
     "env": {
