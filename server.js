@@ -20,15 +20,15 @@ const restify = require('restify');
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const { BotFrameworkAdapter, MemoryStorage, ConversationState } = require('botbuilder');
 
+// This bot's main dialog.
+const { MyBot } = require('./bot');
+
 // Define state store for your bot.
 // See https://aka.ms/about-bot-state to learn more about bot state.
 const memoryStorage = new MemoryStorage();
 
 // Create conversation state with in-memory storage provider.
 const conversationState = new ConversationState(memoryStorage);
-
-// This bot's main dialog.
-const { MyBot } = require('./bot');
 
 // Create HTTP server
 let server = restify.createServer();
