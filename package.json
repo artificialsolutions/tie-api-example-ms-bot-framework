@@ -15,7 +15,7 @@
     },
     "dependencies": {
         "@artificialsolutions/tie-api-client": "^1.1.2",
-        "botbuilder": "^4.0.8",
-        "restify": "^7.1.0"
+        "botbuilder": "^4.1",
+        "restify": "^7.2.2"
     }
 }
