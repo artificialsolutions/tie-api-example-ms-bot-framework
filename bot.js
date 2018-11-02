@@ -75,6 +75,9 @@ class MyBot {
       });
   
       console.log(`Got Teneo Engine response '${teneoResponse.output.text}' for session ${teneoResponse.sessionId}`);
+
+      // your bot can use output parameters to populate cards or attachments
+      // you would find those in teneoResponse.output.parameters
   
       // store egnine sessionId in conversation state
       await this.sessionIdProperty.set(turnContext, teneoResponse.sessionId);
