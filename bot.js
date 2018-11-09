@@ -76,14 +76,32 @@ class MyBot {
   
       console.log(`Got Teneo Engine response '${teneoResponse.output.text}' for session ${teneoResponse.sessionId}`);
 
-      // your bot can use output parameters to populate cards or attachments
-      // you would find those in teneoResponse.output.parameters
-  
+      console.log(teneoResponse.output)
       // store egnine sessionId in conversation state
       await this.sessionIdProperty.set(turnContext, teneoResponse.sessionId);
     
-      // send engine output text to bot framework
-      await turnContext.sendActivity(teneoResponse.output.text);
+      const reply = [];
+
+      // set reply text to answer text from engine
+      reply.text = teneoResponse.output.text;
+
+      // check if an output parameter 'msbotframework' exists in engine response
+      // if so, use it as attachment
+      if (teneoResponse.output.parameters.msbotframework) {
+        try {
+          console.log(teneoResponse.output.parameters.msbotframework)
+          const attachment = JSON.parse(teneoResponse.output.parameters.msbotframework);
+          if (attachment) {
+            reply.attachments = [attachment];
+          }
+        } catch (error_attach) {
+          console.error(`Failed when parsing attachment JSON`, error_attach);
+        }
+      }
+
+      // send response to bot framework.
+      await turnContext.sendActivity(reply);
+
   
     } catch (error) {
       console.error(`Failed when sending input to Teneo Engine @ ${teneoEngineUrl}`, error);
