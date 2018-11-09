@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "Example connector for Teneo and Microsoft Bot Framework",
     "author": "Lucas Willering",
-    "license": "Apache 2.0",
+    "license": "Apache-2.0",
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",

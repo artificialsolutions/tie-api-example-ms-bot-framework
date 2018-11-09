@@ -51,6 +51,18 @@ For example, to make your bot available on Skype, follow these steps:
 2. Go back to the 'Channels' list. Skype should now also be shown in the list of channels for your bot. Click on the link 'Skype'.
 3. A new page will open. Click the 'Add to Contacts' and follow the instructions to add your bot to your Skype contacts
 
+## Adding media to messages
+To add [media or cards](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-add-media-attachments?view=azure-bot-service-4.0&tabs=javascript), this connector looks for an output parameter `msbotframework` in the engine response. The value of that parameter is assumed to contain the media or card JSON as defined by Microsoft.
+
+If we look at Microsoft's specification of an [image attachment](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-add-media-attachments?view=azure-bot-service-4.0&tabs=javascript#send-attachments), the value of the `msbotframework` output parameter to attach an image would need to look like this: 
+```
+{
+    "name": "image.png",
+    "contentType": "image/png",
+    "contentUrl": "https://url.to/an/image.png"
+}
+```
+
 ## Running the connector locally
 If you prefer to manually install this connector or run it locally, proceed as follows:
 1. Download or clone the connector source code from [Github](https://github.com/artificialsolutions/tie-api-example-slack-events-api).
