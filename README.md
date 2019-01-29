@@ -70,5 +70,5 @@ If you prefer to manually install this connector or run it locally, proceed as f
 3. Make sure your connector is available via https. When running locally you can for example use ngrok for this: [ngrok.com](https://ngrok.com). The connector runs on port 3978 by default.
 4. Start the connector with the following command (replacing the environment variables with the appropriate values):
     ```
-    MICROSOFT_APP_ID=<your_microsoft_app_id> MICROSOFT_APP_PASSWORD=<your_microsoft_app_password> TENEO_ENGINE_URL=<your_engine_url> node index.js
+    MICROSOFT_APP_ID=<your_microsoft_app_id> MICROSOFT_APP_PASSWORD=<your_microsoft_app_password> TENEO_ENGINE_URL=<your_engine_url> node server.js
     ```
