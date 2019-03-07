@@ -1,6 +1,6 @@
 {
     "name": "@artificialsolutions/tie-api-example-ms-bot-framework",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "Example connector for Teneo and Microsoft Bot Framework",
     "author": "Lucas Willering",
     "license": "Apache-2.0",
