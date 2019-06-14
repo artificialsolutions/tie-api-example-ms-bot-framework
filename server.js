@@ -20,6 +20,10 @@ const restify = require('restify');
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const { BotFrameworkAdapter, MemoryStorage, ConversationState } = require('botbuilder');
 
+// prevent ReferenceError: Headers is not defined
+const fetch = require('node-fetch');
+global.Headers = fetch.Headers;
+
 // This bot's main dialog.
 const { MyBot } = require('./bot');
 
