@@ -9,40 +9,39 @@ The Microsoft Bot Framework requires that the connector is available via https. 
 Your bot needs to be published and you need to know the engine url.
 
 ## Setup instructions
+### Create an app in Microsoft's Application Registration Portal
+Before we can deploy our connector, we need an 'Application Id' and 'Application password' from Microsoft. To obtain those, we need to create an app in Microsoft's Application Registration Portal.
+1. Go to [https://apps.dev.microsoft.com/](https://apps.dev.microsoft.com/#/appList) and choose 'Add an app'
+2. Provide an 'Application Name' (for example, your bot's name) and click 'Create'
+3. Copy the 'Application Id' in the 'Properties' section, you will need it later.
+4. Under 'Application Secrets' click 'Generate new password'. Copy the password that is shown in the popup, you will need it later. Store it securely. This is the only time when it will be displayed. 
 
-### Setup the bot connector
+### Deploy the bot connector
 Click the button below to deploy the connector to Heroku:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg?classes=noborder)](https://heroku.com/deploy?template=https://github.com/artificialsolutions/tie-api-example-ms-bot-framework)
 
-The values for 'Config Vars' section will be set after later on. For now, click 'View app' and copy the url of your Heroku app, you will need it in the next step.
-
-### Register a bot with the Azure Bot Service
-To register your bot with the Azure Bot Service, you will need to create a new 'Bot Channels Registration'.
-1. Go to [https://portal.azure.com/#home ](https://portal.azure.com/#home) and in the search bar, find "Bot Channel Registration".
-2. Give the bot a name, this name will be available in Skype etc.
-3. Provide the details for the Subscription, Resource Group and Location.
-4. For 'Pricing Tier' you can choose the free 'F0 (10K Premium Messages)' during development.
-5. Enter the following URL in the Messaging Endpoint field: https://[yourherokuappname].herokuapp.com/api/messages (replace [yourherokuappname] with the name of your app on Heroku).
-6. Click 'Create'. You will be notified when the bot is available.
-
-### Create an app in Microsoft's Application Registration Portal
-Before we can deploy our connector, we need an 'Application Id' and 'Application password' from Microsoft. To obtain those:
-1. Go to [https://portal.azure.com/#home ](https://portal.azure.com/#home) and in the search bar, find "App Registration".
-2. Go into the "Applications from personal account" tab, and click on your bot's name.
-3. Click on the "Overview" menu section. Stroe the Application (client) ID value (`Application (client) ID`) somewhere safe. You will need it later for the `MICROSOFT_APP_ID` Config Variable
-4. Click on the "Certificates & Secrets" menu section. Create a `MICROSOFT_APP_PASSWORD` by clicking `+New Client Secret`. Copy the newly generated value, you will need it later. Store it securely. This is the only time when it will be displayed. 
-
-### Deploy the bot connector
-Go back to the Settings section of your Heroku setup.
 
 In the 'Config Vars' section, add the following:
 * **MICROSOFT_APP_ID:** The 'Application Id' you copied earlier.
 * **MICROSOFT_APP_PASSWORD:** The Application password you copied earlier.
 * **TENEO_ENGINE_URL:** The engine url.
 
-That's it! You can now test your bot by opening your bot resource in the Azure portal and choosing 'Test in Web Chat'.
+Click 'View app' and copy the url of your Heroku app, you will need it in the next step.
+
 If you prefer to run your bot locally, see [Running the connector locally](#running-the-connector-locally).
+
+### Register a bot with the Azure Bot Service
+To register your bot with the Azure Bot Service, you will need to create a new 'Bot Channels Registration'.
+1. Visit [https://portal.azure.com/#create/hub](https://portal.azure.com/#create/hub) and click 'Create'.
+2. Give the bot a name, this name will be available in Skype etc.
+3. Provide the details for the Subscription, Resource Group and Location.
+4. For 'Pricing Tier' you can choose the free 'F0 (10K Premium Messages)' during development.
+5. Enter the following URL in the Messaging Endpoint field: https://[yourherokuappname].herokuapp.com/api/messages (replace [yourherokuappname] with the name of your app on Heroku).
+6. Click on 'Auto create App ID and password' and in the 'blade' that appears click 'Create new' and in the next blade that appears enter your Application Id and Application Password and click 'Ok'.
+7. Click 'Create' in the first blade to create your bot. You will be notified when the bot is available.
+
+That's it! You can now test your bot by opening your bot resource in the Azure portal and choosing 'Test in Web Chat'.
 
 ### Add a channel
 You can make your bot available on various channels by opening your bot resource in the Azure portal and choosing 'Channels'. As you can see, your bot is already available via the web channel. From here you can choose to make your bot available on other channels like Microsoft Teams or Skype. 
