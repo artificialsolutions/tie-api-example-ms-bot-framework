@@ -16,6 +16,8 @@
 
 const { ActivityTypes } = require('botbuilder');
 const TIE = require('@artificialsolutions/tie-api-client');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Teneo engine url
 const teneoEngineUrl = process.env.TENEO_ENGINE_URL;

@@ -15,6 +15,8 @@
  */ 
 
 const restify = require('restify');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
