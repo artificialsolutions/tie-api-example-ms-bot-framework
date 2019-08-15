@@ -1,4 +1,4 @@
-# tie-api-example-bot-framework
+# Microsft Bot Framework connector for Teneo
 This node.js example connector allows you to make your Teneo bot available using the Microsoft Bot Framework, allowing you to target channels like Skype, Microsoft Teams and Cortana. The connector acts as middleware between the Microsoft Bot Framework and Teneo. This guide will take you through the steps of registering a new Microsoft bot app and deploying the connector and make it available via Skype.
 
 ## Prerequisites
@@ -9,22 +9,27 @@ The Microsoft Bot Framework requires that the connector is available via https. 
 Your bot needs to be published and you need to know the engine url.
 
 ## Setup instructions
-### Create an app in Microsoft's Application Registration Portal
-Before we can deploy our connector, we need an 'Application Id' and 'Application password' from Microsoft. To obtain those, we need to create an app in Microsoft's Application Registration Portal.
-1. Go to [https://apps.dev.microsoft.com/](https://apps.dev.microsoft.com/#/appList) and choose 'Add an app'
-2. Provide an 'Application Name' (for example, your bot's name) and click 'Create'
-3. Copy the 'Application Id' in the 'Properties' section, you will need it later.
-4. Under 'Application Secrets' click 'Generate new password'. Copy the password that is shown in the popup, you will need it later. Store it securely. This is the only time when it will be displayed. 
+### Create an App Registration in Microsoft's Azure Portal
+Before we can deploy our connector, we need an 'Application Id' and 'Application password' from Microsoft. To obtain those, we need to create an 'App Registration' in Microsoft's Azure Portal.
+1. Go to [https://portal.azure.com/#home](https://portal.azure.com/#home) and in the search bar, find 'App Registrations' and select it from the list of suggested results.
+2. On the page that appears, choose 'New registration'
+3. Enter an 'Application Name' (for example, your bot's name)
+    - give the app registration a name 
+    - in the Supported account types, select the 'Accounts in any organizational directory and personal Microsoft accounts (e.g. Skype, Xbox, Outlook.com)' radio button. If any of the other options are selected, bot creation will fail.
+    - Next click the 'Register' button.
+4. An new page will be opened with the details of your app registration. Copy the 'Application (client) ID' and store it somewhere. You will need it in the next steps. 
+5. Click on the 'Certificates & Secrets' menu section. Click the 'New Client Secret' button, leave the description empty and click the 'Add' button. 
+6. Copy the generated secret, you will need it in the next step. Store it securely. This is the only time when it will be displayed. 
 
 ### Deploy the bot connector
-Click the button below to deploy the connector to Heroku:
+We now have the details the connector needs to be able to run. Click the button below to deploy the connector to Heroku:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg?classes=noborder)](https://heroku.com/deploy?template=https://github.com/artificialsolutions/tie-api-example-ms-bot-framework)
 
 
 In the 'Config Vars' section, add the following:
-* **MICROSOFT_APP_ID:** The 'Application Id' you copied earlier.
-* **MICROSOFT_APP_PASSWORD:** The Application password you copied earlier.
+* **MICROSOFT_APP_ID:** The 'Application (Client) ID' you copied earlier.
+* **MICROSOFT_APP_PASSWORD:** The 'Client Secret' you copied earlier.
 * **TENEO_ENGINE_URL:** The engine url.
 
 Click 'View app' and copy the url of your Heroku app, you will need it in the next step.
@@ -33,12 +38,13 @@ If you prefer to run your bot locally, see [Running the connector locally](#runn
 
 ### Register a bot with the Azure Bot Service
 To register your bot with the Azure Bot Service, you will need to create a new 'Bot Channels Registration'.
-1. Visit [https://portal.azure.com/#create/hub](https://portal.azure.com/#create/hub) and click 'Create'.
-2. Give the bot a name, this name will be available in Skype etc.
+1. Go back to [https://portal.azure.com/#home](https://portal.azure.com/#home) and in the search bar, find 'Bot Channels Registration' and select if from the suggested results (it will show up on the right, in the 'Marketplace' section).
+2. Give the bot a name, this is the name that will be available in Skype etc.
 3. Provide the details for the Subscription, Resource Group and Location.
 4. For 'Pricing Tier' you can choose the free 'F0 (10K Premium Messages)' during development.
 5. Enter the following URL in the Messaging Endpoint field: https://[yourherokuappname].herokuapp.com/api/messages (replace [yourherokuappname] with the name of your app on Heroku).
-6. Click on 'Auto create App ID and password' and in the 'blade' that appears click 'Create new' and in the next blade that appears enter your Application Id and Application Password and click 'Ok'.
+    - If you are running the connector locally, use the ngrok url which will look something like https://6ed67af7.ngrok.io/api/message
+6. Click on 'Auto create App ID and password' and in the 'blade' that appears click 'Create new' and in the next blade that appears enter the 'Application (client) ID' and 'Client Secret' that you copied earlier and click 'Ok'.
 7. Click 'Create' in the first blade to create your bot. You will be notified when the bot is available.
 
 That's it! You can now test your bot by opening your bot resource in the Azure portal and choosing 'Test in Web Chat'.
@@ -49,7 +55,7 @@ You can make your bot available on various channels by opening your bot resource
 For example, to make your bot available on Skype, follow these steps:
 1. Click on the featured 'Skype' channel. This will make your bot accessible from Skype.
 2. Go back to the 'Channels' list. Skype should now also be shown in the list of channels for your bot. Click on the link 'Skype'.
-3. A new page will open. Click the 'Add to Contacts' and follow the instructions to add your bot to your Skype contacts
+3. A new page will open. Click the 'Add to Contacts' and follow the instructions to add your bot to your Skype contacts.
 
 ## Adding media to messages
 To add [media or cards](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-add-media-attachments?view=azure-bot-service-4.0&tabs=javascript), this connector looks for an output parameter `msbotframework` in the engine response. The value of that parameter is assumed to contain the media or card JSON as defined by Microsoft.
