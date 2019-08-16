@@ -92,9 +92,14 @@ class MyBot {
       if (teneoResponse.output.parameters.msbotframework) {
         try {
           console.log(teneoResponse.output.parameters.msbotframework)
-          const attachment = JSON.parse(teneoResponse.output.parameters.msbotframework);
-          if (attachment) {
-            reply.attachments = [attachment];
+          const extension = JSON.parse(teneoResponse.output.parameters.msbotframework);
+          var isSuggestedActions = false
+
+          // suggested actions have an 'actions' key
+          if (extension.actions) {
+            reply.suggestedActions = extension
+          } else {
+            reply.attachments = [extension];
           }
         } catch (error_attach) {
           console.error(`Failed when parsing attachment JSON`, error_attach);
