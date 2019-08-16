@@ -78,7 +78,6 @@ class MyBot {
   
       console.log(`Got Teneo Engine response '${teneoResponse.output.text}' for session ${teneoResponse.sessionId}`);
 
-      console.log(teneoResponse.output)
       // store egnine sessionId in conversation state
       await this.sessionIdProperty.set(turnContext, teneoResponse.sessionId);
     
@@ -91,9 +90,7 @@ class MyBot {
       // if so, use it as attachment
       if (teneoResponse.output.parameters.msbotframework) {
         try {
-          console.log(teneoResponse.output.parameters.msbotframework)
           const extension = JSON.parse(teneoResponse.output.parameters.msbotframework);
-          var isSuggestedActions = false
 
           // suggested actions have an 'actions' key
           if (extension.actions) {
