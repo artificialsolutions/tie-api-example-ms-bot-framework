@@ -87,7 +87,7 @@ class MyBot {
       reply.text = teneoResponse.output.text;
 
       // check if an output parameter 'msbotframework' exists in engine response
-      // if so, use it as attachment
+      // if so, check if it should be added as attachment/card or suggestion action
       if (teneoResponse.output.parameters.msbotframework) {
         try {
           const extension = JSON.parse(teneoResponse.output.parameters.msbotframework);
@@ -96,6 +96,7 @@ class MyBot {
           if (extension.actions) {
             reply.suggestedActions = extension
           } else {
+            // we assume the extension code matches that of an attachment or rich card
             reply.attachments = [extension];
           }
         } catch (error_attach) {
