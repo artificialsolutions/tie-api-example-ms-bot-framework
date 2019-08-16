@@ -65,8 +65,6 @@ class MyBot {
   async handleMessage(turnContext) {
 
     const message = turnContext.activity;
-
-    console.log(message)
   
     try {
       console.log(`Got message '${message.text}' from channel ${message.channelId}`);
