@@ -45,6 +45,7 @@ class MyBot {
    */
   async onTurn(turnContext) {
     // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
+    
     if (turnContext.activity.type === ActivityTypes.Message) {
 
       // send user input to engine and store sessionId in state
@@ -64,6 +65,8 @@ class MyBot {
   async handleMessage(turnContext) {
 
     const message = turnContext.activity;
+
+    console.log(message)
   
     try {
       console.log(`Got message '${message.text}' from channel ${message.channelId}`);
@@ -73,7 +76,8 @@ class MyBot {
   
       // send message to engine using sessionId
       const teneoResponse = await teneoApi.sendInput(sessionId, {
-        text: message.text
+        text: message.text,
+        channel: 'botframework-' + message.channelId
       });
   
       console.log(`Got Teneo Engine response '${teneoResponse.output.text}' for session ${teneoResponse.sessionId}`);
