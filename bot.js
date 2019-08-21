@@ -16,6 +16,8 @@
 
 const { ActivityTypes } = require('botbuilder');
 const TIE = require('@artificialsolutions/tie-api-client');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Teneo engine url
 const teneoEngineUrl = process.env.TENEO_ENGINE_URL;
@@ -43,6 +45,7 @@ class MyBot {
    */
   async onTurn(turnContext) {
     // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
+    
     if (turnContext.activity.type === ActivityTypes.Message) {
 
       // send user input to engine and store sessionId in state
@@ -71,12 +74,12 @@ class MyBot {
   
       // send message to engine using sessionId
       const teneoResponse = await teneoApi.sendInput(sessionId, {
-        text: message.text
+        text: message.text,
+        channel: 'botframework-' + message.channelId
       });
   
       console.log(`Got Teneo Engine response '${teneoResponse.output.text}' for session ${teneoResponse.sessionId}`);
 
-      console.log(teneoResponse.output)
       // store egnine sessionId in conversation state
       await this.sessionIdProperty.set(turnContext, teneoResponse.sessionId);
     
@@ -86,13 +89,17 @@ class MyBot {
       reply.text = teneoResponse.output.text;
 
       // check if an output parameter 'msbotframework' exists in engine response
-      // if so, use it as attachment
+      // if so, check if it should be added as attachment/card or suggestion action
       if (teneoResponse.output.parameters.msbotframework) {
         try {
-          console.log(teneoResponse.output.parameters.msbotframework)
-          const attachment = JSON.parse(teneoResponse.output.parameters.msbotframework);
-          if (attachment) {
-            reply.attachments = [attachment];
+          const extension = JSON.parse(teneoResponse.output.parameters.msbotframework);
+
+          // suggested actions have an 'actions' key
+          if (extension.actions) {
+            reply.suggestedActions = extension
+          } else {
+            // we assume the extension code matches that of an attachment or rich card
+            reply.attachments = [extension];
           }
         } catch (error_attach) {
           console.error(`Failed when parsing attachment JSON`, error_attach);
