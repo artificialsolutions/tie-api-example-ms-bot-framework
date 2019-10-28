@@ -75,7 +75,7 @@ If you prefer to manually install this connector or run it locally, proceed as f
     ```
     git clone https://github.com/artificialsolutions/tie-api-example-ms-bot-framework.git && cd tie-api-example-ms-bot-framework
     ```
-2. IInstall dependencies by running the following command in the folder where you stored the source:
+2. Install dependencies by running the following command in the folder where you stored the source:
     ```
     npm install
     ```
