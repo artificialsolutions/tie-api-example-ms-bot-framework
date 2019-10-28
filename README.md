@@ -71,8 +71,14 @@ If we look at Microsoft's specification of an [image attachment](https://docs.mi
 
 ## Running the connector locally
 If you prefer to manually install this connector or run it locally, proceed as follows:
-1. Download or clone the connector source code from [Github](https://github.com/artificialsolutions/tie-api-example-slack-events-api).
-2. Install dependencies by running `npm install` in the folder where you stored the source.
+1. Download or clone the connector source code
+    ```
+    git clone https://github.com/artificialsolutions/tie-api-example-ms-bot-framework.git && cd tie-api-example-ms-bot-framework
+    ```
+2. IInstall dependencies by running the following command in the folder where you stored the source:
+    ```
+    npm install
+    ```
 3. Make sure your connector is available via https. When running locally you can for example use ngrok for this: [ngrok.com](https://ngrok.com). The connector runs on port 3978 by default:
     ```
     ngrok http 3978
