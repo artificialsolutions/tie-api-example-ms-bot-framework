@@ -57,7 +57,7 @@ For example, to make your bot available on Skype, follow these steps:
 2. Go back to the 'Channels' list. Skype should now also be shown in the list of channels for your bot. Click on the link 'Skype'.
 3. A new page will open. Click the 'Add to Contacts' and follow the instructions to add your bot to your Skype contacts.
 
-## Adding media to messages
+## Adding media to messages from your bot
 To add [media or cards](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-add-media-attachments?view=azure-bot-service-4.0&tabs=javascript), this connector looks for an output parameter `msbotframework` in the engine response. The value of that parameter is assumed to contain the media or card JSON as defined by Microsoft.
 
 If we look at Microsoft's specification of an [image attachment](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-add-media-attachments?view=azure-bot-service-4.0&tabs=javascript#send-attachments), the value of the `msbotframework` output parameter to attach an image would need to look like this: 
@@ -68,6 +68,27 @@ If we look at Microsoft's specification of an [image attachment](https://docs.mi
     "contentUrl": "https://url.to/an/image.png"
 }
 ```
+
+## Engine input parameters
+### channel
+The input parameter `channel` allows you to add channel specfic optimisations to your bot. The value start with `botframework-` and the botframework channel is appended. For example, the value for requests from users that use Teams is `botframework-msteams`.
+
+### botframeworkAttachments
+Users can send attachment to the bot (for example GIF's from Teams). The attachement details are included in an input parameter `botframeworkAttachements`. The value is a string that looks something like this:
+
+```
+[
+    {
+        "contentType": "image/*",
+        "contentUrl": "https://media3.giphy.com/media/B0vFTrb0ZGDf2/giphy.gif"
+    },
+    {
+        "contentType": "text/html",
+        "content": "<div><div>\n<div><img alt=\"happy toddlers and tiaras GIF (GIF Image)\" height=\"242\" src=\"https://media3.giphy.com/media/B0vFTrb0ZGDf2/giphy.gif\" width=\"460\" style=\"max-height:250px; width:460px; height:242px\"></div>\n\n\n</div>\n</div>"
+    }
+]
+```
+
 
 ## Running the connector locally
 If you prefer to manually install this connector or run it locally, proceed as follows:
