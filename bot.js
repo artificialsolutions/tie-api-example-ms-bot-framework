@@ -25,6 +25,8 @@ const teneoEngineUrl = process.env.TENEO_ENGINE_URL;
 // property to store sessionId in conversation state object
 const SESSION_ID_PROPERTY = 'sessionId';
 
+const WELCOMED_USER = 'welcomedUserProperty';
+
 // initialize a Teneo client for interacting with TeneoEengine
 const teneoApi = TIE.init(teneoEngineUrl);
 
@@ -37,6 +39,8 @@ class MyBot {
     // Creates a new state accessor property.
     // See https://aka.ms/about-bot-state-accessors to learn more about the bot state and state accessors.
     this.sessionIdProperty = conversationState.createProperty(SESSION_ID_PROPERTY);
+    this.welcomedUserProperty = conversationState.createProperty(WELCOMED_USER);
+
     this.conversationState = conversationState;
   }
   /**
@@ -48,9 +52,26 @@ class MyBot {
     
     if (turnContext.activity.type === ActivityTypes.Message) {
 
-      // send user input to engine and store sessionId in state
+      // send user input to engine and store sessionId in state in case not stored yet
       await this.handleMessage(turnContext);
 
+    } else if (turnContext.activity.type === ActivityTypes.ConversationUpdate) {
+      // Conversation update activities describe a change in a conversation's members, description, existence, or otherwise.
+      // We want to send a welcome message to conversation members when they join the conversation
+      
+      console.log(turnContext.activity.membersAdded)
+      // Iterate over all new members added to the conversation
+      for (const idx in turnContext.activity.membersAdded) {
+
+        // Only sent message to conversation members who aren't the bot
+        if (turnContext.activity.membersAdded[idx].id !== turnContext.activity.recipient.id) {
+          
+          // send empty input to engine to receive Teneo greeting message and store sessionId in state
+          await this.handleMessage(turnContext);
+        }
+
+      }
+      
     } else {
       console.log(`[${turnContext.activity.type} event detected]`);
     }
@@ -65,18 +86,30 @@ class MyBot {
   async handleMessage(turnContext) {
 
     const message = turnContext.activity;
-  
+    console.log(message);
     try {
-      console.log(`Got message '${message.text}' from channel ${message.channelId}`);
+
+      let messageText = ""
+      if (message.text) {
+        messageText = message.text;
+      }
+      
+      console.log(`Got message '${messageText}' from channel ${message.channelId}`);
   
       // find engine session id
       const sessionId = await this.sessionIdProperty.get(turnContext);
+
+      let inputDetails = {
+        text: messageText,
+        channel: 'botframework-' + message.channelId
+      }
+
+      if (message.attachments) {
+        inputDetails["botframeworkAttachments"] = JSON.stringify(message.attachments);
+      }
   
       // send message to engine using sessionId
-      const teneoResponse = await teneoApi.sendInput(sessionId, {
-        text: message.text,
-        channel: 'botframework-' + message.channelId
-      });
+      const teneoResponse = await teneoApi.sendInput(sessionId, inputDetails);
   
       console.log(`Got Teneo Engine response '${teneoResponse.output.text}' for session ${teneoResponse.sessionId}`);
 
