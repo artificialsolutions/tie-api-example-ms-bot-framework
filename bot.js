@@ -86,7 +86,7 @@ class MyBot {
   async handleMessage(turnContext) {
 
     const message = turnContext.activity;
-    console.log(message);
+    // console.log(message);
     try {
 
       let messageText = ""
