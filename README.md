@@ -1,4 +1,4 @@
-# Microsft Bot Framework connector for Teneo
+# Microsoft Bot Framework connector for Teneo
 This node.js example connector allows you to make your Teneo bot available using the Microsoft Bot Framework, allowing you to target channels like Skype, Microsoft Teams and Cortana. The connector acts as middleware between the Microsoft Bot Framework and Teneo. This guide will take you through the steps of registering a new Microsoft bot app and deploying the connector and make it available via Skype.
 
 ## Prerequisites
