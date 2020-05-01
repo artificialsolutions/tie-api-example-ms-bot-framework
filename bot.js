@@ -160,12 +160,14 @@ class MyBot {
   }
 
   /**
-   * The Teneo response can contain an output parameter that 
+   * A Teneo response can contain an output parameter that 
    * indicates how the output text can be split in multiple 
-   * messages. The value of the parameter is a list with start 
-   * and end indexes that looks like this:
-   * [[0, 39], [40, 67], [68, 96], [97, 97]]
-   * This method will split the output text accordingly and return a list of strings */ 
+   * segments or messages. The value of the parameter is a list 
+   * with start and end index pairs that looks like this:
+   * [[0, 39], [40, 67], [70, 96]]
+   * getOutputTextSegments will split the output text into 
+   * its segments and return them as a list of strings. 
+   **/ 
   getOutputTextSegments(teneoResponse) {
 
     const teneoAnswerText = teneoResponse.output.text;
@@ -183,20 +185,20 @@ class MyBot {
     }
 
     if (segmentRanges && Array.isArray(segmentRanges)) {
-      // each breakpoint in the list is a message
-      for (var i = 0; i < segmentRanges.length; ++i) {
 
+      // each segmentRange in the list contains the start and end index for a message
+      segmentRanges.forEach((segmentRange) => {
         try {
-          // get the start and end index for this bubble
-          var segmentStartIndex = segmentRanges[i][0];
-          var segmentEndIndex = segmentRanges[i][1];
+          // get the start and end index for this segment
+          var segmentStartIndex = segmentRange[0];
+          var segmentEndIndex = segmentRange[1];
 
           // if start and end seem valid
           if (!isNaN(segmentStartIndex) && !isNaN(segmentEndIndex)) {
-            // get the substring that needs to appear in a bubble
+            // get the substring from the answer text that needs to appear in a bubble
             var segmentText = teneoAnswerText.substring(segmentStartIndex,segmentEndIndex).trim();
 
-            // add the segment to the list of chunks, but only if it is not empty
+            // add the segment to the list of segments, but only if it is not empty
             if (segmentText) {
               segments.push(segmentText)
             }
@@ -205,7 +207,7 @@ class MyBot {
         } catch (err) {
           console.log('Error: unexpected segment range')
         }
-      }
+      });
     } else {
       // message does not need to be segmented, the only chunk is the full answer text
       segments.push(teneoAnswerText)
