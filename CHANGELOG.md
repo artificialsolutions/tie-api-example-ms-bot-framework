@@ -1,7 +1,7 @@
 # v1.3.1
 ## 30-06-2020
-    * Support for splitting outputs into multiple speech bubbles
-    * Updated dependencies
+* Support for splitting outputs into multiple speech bubbles
+* Updated dependencies
 
 # v1.2.0
 ## 21-08-2019
