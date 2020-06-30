@@ -69,6 +69,18 @@ If we look at Microsoft's specification of an [image attachment](https://docs.mi
 }
 ```
 
+## Splitting answers into 'bubbles'
+Sometimes you may wish to provide an answer using multiple text bubbles. This can be achieved by including an output parameter called `outputTextSegmentIndexes`. This output parameter should contain a list of index pairs, to indicate where the output text can be split into separate bubbles. The value of the `outputTextSegmentIndexes` should be structured like this (linebreaks are added for readability):
+```
+[
+ 	[startIndexOfFirstBubble, endIndexOfFirstBubble],
+	[startIndexOfSecondBubble, endIndexOfSecondBubble],
+	...
+]
+```
+
+For more details on how to generate the value of `outputTextSegmentIndexes` in Teneo Studio, please refer to [Splitting answers into bubbles](https://www.teneo.ai/engine/channels/microsoft-bot-framework#splitting-answers-into-bubbles).
+
 ## Engine input parameters
 ### channel
 The input parameter `channel` allows you to add channel specfic optimisations to your bot. The value start with `botframework-` and the botframework channel is appended. For example, the value for requests from users that use Teams is `botframework-msteams`.
