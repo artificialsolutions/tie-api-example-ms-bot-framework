@@ -16,7 +16,7 @@
 
 const { ActivityTypes } = require('botbuilder');
 const TIE = require('@artificialsolutions/tie-api-client');
-const TENEO_OUTPUTSEGMENTS_PARAM = "breakpoints";
+const TENEO_OUTPUTSEGMENTS_PARAM = "outputTextSegmentIndexes";
 const dotenv = require('dotenv');
 dotenv.config();
 
