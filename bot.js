@@ -16,6 +16,7 @@
 
 const { ActivityTypes } = require('botbuilder');
 const TIE = require('@artificialsolutions/tie-api-client');
+const TENEO_OUTPUTSEGMENTS_PARAM = "outputTextSegmentIndexes";
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -93,7 +94,7 @@ class MyBot {
       if (message.text) {
         messageText = message.text;
       }
-      
+
       console.log(`Got message '${messageText}' from channel ${message.channelId}`);
   
       // find engine session id
@@ -115,39 +116,105 @@ class MyBot {
 
       // store egnine sessionId in conversation state
       await this.sessionIdProperty.set(turnContext, teneoResponse.sessionId);
-    
-      const reply = [];
 
-      // set reply text to answer text from engine
-      reply.text = teneoResponse.output.text;
+      // separate the answer text into segments if applicable
+      let answerTextSegments = this.getOutputTextSegments(teneoResponse);
+      
+      for (let index = 0; index < answerTextSegments.length; index++) {
+        const segmentText = answerTextSegments[index];
+        const reply = {};
 
-      // check if an output parameter 'msbotframework' exists in engine response
-      // if so, check if it should be added as attachment/card or suggestion action
-      if (teneoResponse.output.parameters.msbotframework) {
-        try {
-          const extension = JSON.parse(teneoResponse.output.parameters.msbotframework);
+        reply.text = segmentText;
 
-          // suggested actions have an 'actions' key
-          if (extension.actions) {
-            reply.suggestedActions = extension
-          } else {
-            // we assume the extension code matches that of an attachment or rich card
-            reply.attachments = [extension];
+        // only send bot framework actions for the last segment/message
+        if (index + 1 === answerTextSegments.length) {
+          // check if an output parameter 'msbotframework' exists in engine response
+          // if so, check if it should be added as attachment/card or suggestion action
+          if (teneoResponse.output.parameters.msbotframework) {
+            try {
+              const extension = JSON.parse(
+                teneoResponse.output.parameters.msbotframework
+              );
+
+              // suggested actions have an 'actions' key
+              if (extension.actions) {
+                reply.suggestedActions = extension;
+              } else {
+                // we assume the extension code matches that of an attachment or rich card
+                reply.attachments = [extension];
+              }
+            } catch (attachError) {
+              console.error(`Failed when parsing attachment JSON`, attachError);
+            }
           }
-        } catch (error_attach) {
-          console.error(`Failed when parsing attachment JSON`, error_attach);
         }
+
+        // send response to bot framework.
+        await turnContext.sendActivity(reply);
       }
 
-      // send response to bot framework.
-      await turnContext.sendActivity(reply);
-
-  
     } catch (error) {
       console.error(`Failed when sending input to Teneo Engine @ ${teneoEngineUrl}`, error);
     }
   
   }
+
+  /**
+   * A Teneo response can contain an output parameter that 
+   * indicates how the output text can be split in multiple 
+   * segments or messages. The value of the parameter is a list 
+   * with start and end index pairs that looks like this:
+   * [[0, 39], [40, 67], [70, 96]]
+   * getOutputTextSegments will split the output text into 
+   * its segments and return them as a list of strings. 
+   **/ 
+  getOutputTextSegments(teneoResponse) {
+
+    const teneoAnswerText = teneoResponse.output.text;
+    let segments = [];
+    let segmentRanges;
+
+    // get the output param with boundaries for each message
+    try {
+      const segmentsString = teneoResponse.output.parameters[TENEO_OUTPUTSEGMENTS_PARAM];
+      if (segmentsString) {
+        segmentRanges = JSON.parse(segmentsString);
+      }
+    } catch(err) {
+      console.log('Error: Unable to parse segmentsString JSON')
+    }
+
+    if (segmentRanges && Array.isArray(segmentRanges)) {
+
+      // each segmentRange in the list contains the start and end index for a message
+      segmentRanges.forEach((segmentRange) => {
+        try {
+          // get the start and end index for this segment
+          var segmentStartIndex = segmentRange[0];
+          var segmentEndIndex = segmentRange[1];
+
+          // if start and end seem valid
+          if (!isNaN(segmentStartIndex) && !isNaN(segmentEndIndex)) {
+            // get the substring from the answer text that needs to appear in a bubble
+            var segmentText = teneoAnswerText.substring(segmentStartIndex,segmentEndIndex).trim();
+
+            // add the segment to the list of segments, but only if it is not empty
+            if (segmentText) {
+              segments.push(segmentText)
+            }
+          }
+          
+        } catch (err) {
+          console.log('Error: unexpected segment range')
+        }
+      });
+    } else {
+      // message does not need to be segmented, the only chunk is the full answer text
+      segments.push(teneoAnswerText)
+    }
+    return segments;
+  }
+
 }
 
 module.exports.MyBot = MyBot;
