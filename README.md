@@ -38,14 +38,15 @@ If you prefer to run your bot locally, see [Running the connector locally](#runn
 
 ### Register a bot with the Azure Bot Service
 To register your bot with the Azure Bot Service, you will need to create a new 'Bot Channels Registration'.
-1. Go back to [https://portal.azure.com/#home](https://portal.azure.com/#home) and in the search bar, find 'Bot Channels Registration' and select if from the suggested results (it will show up on the right, in the 'Marketplace' section).
+1. Go back to [https://portal.azure.com/#home](https://portal.azure.com/#home) and in the search bar, find 'Bot Channels Registration' and select if from the suggested results (it will show up on the right, in the 'Marketplace' section). You may be prompted to create a free Azure account for this.
 2. Give the bot a name, this is the name that will be available in Skype etc.
-3. Provide the details for the Subscription, Resource Group and Location.
-4. For 'Pricing Tier' you can choose the free 'F0 (10K Premium Messages)' during development.
-5. Enter the following URL in the Messaging Endpoint field: https://[yourherokuappname].herokuapp.com/api/messages (replace [yourherokuappname] with the name of your app on Heroku).
-    - If you are running the connector locally, use the ngrok url which will look something like https://6ed67af7.ngrok.io/api/message
-6. Click on 'Auto create App ID and password' and in the 'blade' that appears click 'Create new' and in the next blade that appears enter the 'Application (client) ID' and 'Client Secret' that you copied earlier and click 'Ok'.
-7. Click 'Create' in the first blade to create your bot. You will be notified when the bot is available.
+3. Provide the details for the Subscription. 
+4. Choose a Resource Group or create a new one. Keep in mind that new blank Resources Group only work with some locations, for example: Central US.
+5. For 'Pricing Tier' you can choose the free 'F0 (10K Premium Messages)' during development.
+6. Enter the following URL in the Messaging Endpoint field: https://[yourherokuappname].herokuapp.com/api/messages (replace [yourherokuappname] with the name of your app on Heroku).
+    - If you are running the connector locally, use the ngrok url which will look something like https://6ed67af7.ngrok.io/api/messages
+7. Click on 'Auto create App ID and password' and in the 'blade' that appears click 'Create new' and in the next blade that appears enter the 'Application (client) ID' and 'Client Secret' that you copied earlier and click 'Ok'.
+8. Click 'Create' in the first blade to create your bot. You will be notified when the bot is available.
 
 That's it! You can now test your bot by opening your bot resource in the Azure portal and choosing 'Test in Web Chat'.
 
