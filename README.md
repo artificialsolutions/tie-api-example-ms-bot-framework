@@ -3,7 +3,7 @@ This node.js example connector allows you to make your Teneo bot available using
 
 ## Prerequisites
 ### Https
-The Microsoft Bot Framework requires that the connector is available via https. On this page we will be using Heroku to host this connector, for which a (free) Heroku account is needed. You can however also manually install the connector on a location of your choice, see [Running the connector locally](#running-the-connector-locally).
+The Microsoft Bot Framework requires that the connector is available via https. On this page we will be using Azure to host this connector, for which a (free) Azure account is needed. You can however also manually install the connector on a location of your choice, see [Running the connector locally](#running-the-connector-locally).
 
 ### Teneo Engine
 Your bot needs to be published and you need to know the engine url.
@@ -22,18 +22,6 @@ Before we can deploy our connector, we need an 'Application Id' and 'Application
 6. Copy the generated secret, you will need it in the next step. Store it securely. This is the only time when it will be displayed. 
 
 ### Deploy the bot connector
-We now have the details the connector needs to be able to run. Click the button below to deploy the connector to Heroku:
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg?classes=noborder)](https://heroku.com/deploy?template=https://github.com/artificialsolutions/tie-api-example-ms-bot-framework)
-
-
-In the 'Config Vars' section, add the following:
-* **MICROSOFT_APP_ID:** The 'Application (Client) ID' you copied earlier.
-* **MICROSOFT_APP_PASSWORD:** The 'Client Secret' you copied earlier.
-* **TENEO_ENGINE_URL:** The engine url.
-
-Click 'View app' and copy the url of your Heroku app, you will need it in the next step.
-
 If you prefer to run your bot locally, see [Running the connector locally](#running-the-connector-locally).
 
 ### Register a bot with the Azure Bot Service
@@ -43,8 +31,7 @@ To register your bot with the Azure Bot Service, you will need to create a new '
 3. Provide the details for the Subscription. 
 4. Choose a Resource Group or create a new one. Keep in mind that new blank Resources Group only work with some locations, for example: Central US.
 5. For 'Pricing Tier' you can choose the free 'F0 (10K Premium Messages)' during development.
-6. Enter the following URL in the Messaging Endpoint field: https://[yourherokuappname].herokuapp.com/api/messages (replace [yourherokuappname] with the name of your app on Heroku).
-    - If you are running the connector locally, use the ngrok url which will look something like https://6ed67af7.ngrok.io/api/messages
+6. If you are running the connector locally, use the ngrok url which will look something like https://6ed67af7.ngrok.io/api/messages
 7. Click on 'Auto create App ID and password' and in the 'blade' that appears click 'Create new' and in the next blade that appears enter the 'Application (client) ID' and 'Client Secret' that you copied earlier and click 'Ok'.
 8. Click 'Create' in the first blade to create your bot. You will be notified when the bot is available.
 
