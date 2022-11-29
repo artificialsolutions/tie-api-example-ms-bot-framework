@@ -22,6 +22,9 @@ Before we can deploy our connector, we need an 'Application Id' and 'Application
 6. Copy the generated secret, you will need it in the next step. Store it securely. This is the only time when it will be displayed. 
 
 ### Deploy the bot connector
+
+**Note: Starting November 28, 2022, free Heroku Dynos, free Heroku Postgres, and free Heroku Data for Redis® plans will no longer be available.**
+
 We now have the details the connector needs to be able to run. Click the button below to deploy the connector to Heroku:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg?classes=noborder)](https://heroku.com/deploy?template=https://github.com/artificialsolutions/tie-api-example-ms-bot-framework)
