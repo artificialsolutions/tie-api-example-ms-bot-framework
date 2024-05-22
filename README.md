@@ -83,7 +83,7 @@ Sometimes you may wish to provide an answer using multiple text bubbles. This ca
 ]
 ```
 
-For more details on how to generate the value of `outputTextSegmentIndexes` in Teneo Studio, please refer to [Splitting answers into bubbles](https://developers.artificial-solutions.com/engine/channels/microsoft-bot-framework#splitting-answers-into-bubbles).
+For more details on how to generate the value of `outputTextSegmentIndexes` in Teneo Studio, please refer to [Splitting answers into bubbles](https://developers.teneo.ai/resource/channels/microsoft-bot-framework#splitting-answers-into-bubbles).
 
 ## Engine input parameters
 ### channel
